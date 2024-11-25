@@ -22,7 +22,6 @@ app.use(express.json());
 const corsOptions = {
   origin: 'https://www.systemparkcar.com.br',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   credentials: true,
 };
 
