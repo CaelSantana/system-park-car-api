@@ -18,7 +18,7 @@ const carParkCapacityRoutes = require('./src/modules/carParkCapacities/carParkCa
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'https://www.systemparkcar.com.br',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   credentials: true,
