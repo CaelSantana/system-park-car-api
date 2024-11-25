@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs')
+const https = require('https')
 const cors = require('cors');
 const app = express();
 const config = require('./src/config/config');
@@ -18,7 +20,7 @@ const carParkCapacityRoutes = require('./src/modules/carParkCapacities/carParkCa
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://www.systemparkcar.com.br',
+  origin: 'www.systemparkcar.com.br',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   credentials: true,
@@ -48,10 +50,19 @@ app.use('/api', tariffRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', carParkCapacityRoutes);
 
+https.createServer({
+  cert: fs.readFileSync('src/SSL/code.crt'),
+  key: fs.readFileSync('src/SSL/code.key')
+}, app).listen(3001, () => console.log("Rodando em https"));
+
 sequelize.sync()
   .then(() => {
     app.listen(config.port, () => {
-      console.log(`Servidor rodando na porta ${config.port}`);
+      console.log(`Seja bem-vindo ao servidor System Park Car na porta ${config.port}`);
+      console.log('Certificado SSL:', fs.existsSync('src/SSL/code.crt'));
+      console.log('Chave SSL:', fs.existsSync('src/SSL/code.key'));
+
     });
   })
   .catch(err => console.log(err));
+
