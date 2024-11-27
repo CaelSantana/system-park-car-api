@@ -15,8 +15,8 @@ const Ticket = sequelize.define('Ticket', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'car_parks', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'car_parks',
+      key: 'id'
     }
   },
   garage_number: {
@@ -35,23 +35,23 @@ const Ticket = sequelize.define('Ticket', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'brands', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'brands',
+      key: 'id'
     }
   },
   vehicles_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'vehicles', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'vehicles',
+      key: 'id'
     }
   },
   vehicles_plate: {
     type: DataTypes.STRING(10),
     allowNull: false,
     references: {
-      model: 'vehicles', // Nome da tabela referenciada
+      model: 'vehicles',
       key: 'id'
     }
   },
@@ -71,25 +71,21 @@ const Ticket = sequelize.define('Ticket', {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: 'tariffs', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'tariffs',
+      key: 'id'
     }
   },
   client_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'users', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'users',
+      key: 'id'
     }
   },
   employee_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    // references: {
-    //   model: 'users', // Nome da tabela referenciada
-    //   key: 'id' // Chave referenciada
-    // }
   },
   status: {
     type: DataTypes.ENUM('pending', 'paid', 'canceled'),
@@ -107,10 +103,10 @@ const Ticket = sequelize.define('Ticket', {
     defaultValue: DataTypes.NOW,
   }
 }, {
-  timestamps: true, // Habilita timestamps automáticos
-  createdAt: 'created_at', // Mapeia createdAt para created_at
-  updatedAt: 'updated_at', // Mapeia updatedAt para updated_at
-  tableName: 'tickets', // Nome da tabela no banco de dados
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  tableName: 'tickets',
 });
 
 Ticket.belongsTo(User, { as: 'client', foreignKey: 'client_id' });

@@ -1,0 +1,2 @@
+INSERT INTO car_parks (name, phone, capacity, zip_code, street, number, complement, district, city, state, created_at, updated_at) VALUES 
+	('Unidade matriz', '(11) 99999-9999', 84, '12345678', 'Rua Exemplo', '123', 'Apto 101', 'Centro', 'Cidade Exemplo', 'Estado Exemplo', now(), now());

@@ -56,11 +56,10 @@ const User = sequelize.define('User', {
   },
 }, {
   tableName: 'users',
-  timestamps: false, // Desativa timestamps automáticos do Sequelize
-  underscored: true, // Usa snake_case para nomes de coluna
+  timestamps: false,
+  underscored: true,
 });
 
-// Define a associação com o modelo de roles
 User.associate = models => {
   User.belongsTo(models.Role, {
     foreignKey: 'roles_id',

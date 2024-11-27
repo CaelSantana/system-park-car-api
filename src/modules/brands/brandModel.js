@@ -36,10 +36,10 @@ const Brand = sequelize.define('Brand', {
     onUpdate: DataTypes.NOW,
   },
 }, {
-  timestamps: true, // Habilita timestamps automáticos
-  createdAt: 'created_at', // Mapeia createdAt para created_at
-  updatedAt: 'updated_at', // Mapeia updatedAt para updated_at
-  tableName: 'brands', // Nome da tabela no banco de dados
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  tableName: 'brands',
 });
 
 module.exports = Brand;

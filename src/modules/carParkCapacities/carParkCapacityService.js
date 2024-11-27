@@ -28,7 +28,7 @@ const getAllCapacities = async () => {
         {
           model: VehicleType,
           as: 'vehicle_type',
-          attributes: ['type_name'] // Inclui apenas o type_name da tabela vehicles_type
+          attributes: ['type_name']
         }
       ]
     });
@@ -48,20 +48,20 @@ const getCapacityById = async (id) => {
 const getCapacitiesByVehicleType = async (carParksId) => {
   try {
     return await CarParkCapacity.findAll({
-      where: { car_parks_id: carParksId }, // Filtra por ID do estacionamento
+      where: { car_parks_id: carParksId },
       attributes: [
-        [Sequelize.col('vehicle_type.type_name'), 'vehicle_type_name'], // Renomeia o campo type_name para vehicle_type_name
-        [Sequelize.col('vehicles_type_id'), 'vehicles_type_id'], // Inclui vehicles_type_id
-        [Sequelize.fn('SUM', Sequelize.col('capacity')), 'total_spaces'] // Soma todas as capacidades
+        [Sequelize.col('vehicle_type.type_name'), 'vehicle_type_name'],
+        [Sequelize.col('vehicles_type_id'), 'vehicles_type_id'],
+        [Sequelize.fn('SUM', Sequelize.col('capacity')), 'total_spaces']
       ],
       include: [
         {
           model: VehicleType,
           as: 'vehicle_type',
-          attributes: [] // Nenhum atributo adicional, pois já estamos renomeando acima
+          attributes: []
         }
       ],
-      group: ['vehicle_type.type_name', 'vehicles_type_id'], // Agrupa pelo nome do tipo de veículo
+      group: ['vehicle_type.type_name', 'vehicles_type_id'],
     });
   } catch (error) {
     throw new Error('Erro ao buscar capacidades por tipo de veículo: ' + error.message);

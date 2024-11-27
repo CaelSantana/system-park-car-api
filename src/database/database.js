@@ -8,17 +8,15 @@ const sequelize = new Sequelize(
   {
     host: config.db.host,
     port: config.db.port,
-    dialect: 'mysql',
-    timezone: '-03:00'
+    dialect: 'mysql'
   }
 );
 
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error('Não foi possível se conectar ao banco de dados:', error);
   }
 })();
 

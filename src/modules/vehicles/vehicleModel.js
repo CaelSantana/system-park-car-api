@@ -22,7 +22,7 @@ Vehicle.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'vehicles_type', // Nome da tabela referenciada
+      model: 'vehicles_type',
       key: 'id',
     },
   },
@@ -30,7 +30,7 @@ Vehicle.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'users', // Nome da tabela referenciada
+      model: 'users',
       key: 'id',
     },
   },
@@ -38,7 +38,7 @@ Vehicle.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'brands', // Nome da tabela referenciada
+      model: 'brands',
       key: 'id',
     },
   },
@@ -56,9 +56,9 @@ Vehicle.init({
   sequelize,
   modelName: 'Vehicle',
   tableName: 'vehicles',
-  timestamps: true, // Habilitar timestamps para utilizar createdAt e updatedAt
-  createdAt: 'created_at', // Mapeamento do nome da coluna
-  updatedAt: 'updated_at', // Mapeamento do nome da coluna
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
 });
 
 Vehicle.belongsTo(User, { foreignKey: 'users_id', as: 'user' });

@@ -16,7 +16,7 @@ exports.createTicket = async (req, res) => {
     const ticket = await ticketService.createTicket(ticketData);
     res.status(201).json(ticket);
   } catch (error) {
-    if (error.message.includes('Car park not found') || error.message.includes('Brand not found') || error.message.includes('Vehicle not found') || error.message.includes('Tariff not found')) {
+    if (error.message.includes('Estacionamento não encontrado') || error.message.includes('Marca não encontrada') || error.message.includes('Veículo não encontrado') || error.message.includes('Tarifa não encontrada')) {
       res.status(400).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -35,7 +35,7 @@ exports.getTicketById = async (req, res) => {
 
 exports.updateTicket = async (req, res) => {
   const { id } = req.params;
-  const { finish_time, status } = req.body; // Certifique-se de que o status está sendo extraído do corpo da requisição
+  const { finish_time, status } = req.body;
 
   try {
     const updatedTicket = await ticketService.updateTicket(id, { finish_time, status });
@@ -48,8 +48,8 @@ exports.updateTicket = async (req, res) => {
 exports.deleteTicket = async (req, res) => {
   try {
     await ticketService.deleteTicket(req.params.id);
-    res.json({ message: 'Ticket deletado com sucesso' });
+    res.json({ message: 'Ticket excluído com sucesso' });
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao deletar ticket' });
+    res.status(500).json({ error: 'Erro ao excluir ticket' });
   }
 };

@@ -23,7 +23,7 @@ exports.getVehicleByPlate = async (req, res) => {
     const vehicle = await vehicleService.getVehicleByPlate(req.params.plate);
     res.status(200).json(vehicle);
   } catch (error) {
-    if (error.message === 'Vehicle not found') {
+    if (error.message === 'Veículo não encontrado') {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -46,7 +46,7 @@ exports.updateVehicle = async (req, res) => {
     const vehicle = await vehicleService.updateVehicle(req.params.id, req.body);
     res.status(200).json(vehicle);
   } catch (error) {
-    if (error.message === 'Vehicle not found') {
+    if (error.message === 'Veículo não encontrado') {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -57,9 +57,9 @@ exports.updateVehicle = async (req, res) => {
 exports.deleteVehicle = async (req, res) => {
   try {
     const vehicle = await vehicleService.deleteVehicle(req.params.plate);
-    res.status(200).json({ message: 'Vehicle deleted successfully' });
+    res.status(200).json({ message: 'Veículo excluído com sucesso' });
   } catch (error) {
-    if (error.message === 'Vehicle not found') {
+    if (error.message === 'Veículo não encontrado') {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });

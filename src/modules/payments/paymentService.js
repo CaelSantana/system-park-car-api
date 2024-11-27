@@ -14,8 +14,8 @@ const getAllPayments = async () => {
     return await Payment.findAll({
       include: [{
         model: User,
-        as: 'user', // Ajuste para o alias usado no Payment.belongsTo
-        attributes: ['full_name'] // Inclua o nome do usuário
+        as: 'user',
+        attributes: ['full_name']
       }]
     });
   } catch (error) {

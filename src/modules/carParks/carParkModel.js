@@ -60,10 +60,10 @@ const CarPark = sequelize.define('CarPark', {
     onUpdate: DataTypes.NOW,
   },
 }, {
-  timestamps: true, // Habilita timestamps automáticos
-  createdAt: 'created_at', // Mapeia createdAt para created_at
-  updatedAt: 'updated_at', // Mapeia updatedAt para updated_at
-  tableName: 'car_parks', // Nome da tabela no banco de dados
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  tableName: 'car_parks',
 });
 
 module.exports = CarPark;

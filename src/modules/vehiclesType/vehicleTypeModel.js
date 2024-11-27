@@ -33,8 +33,8 @@ const VehiclesType = sequelize.define('VehiclesType', {
   },
 }, {
   tableName: 'vehicles_type',
-  timestamps: false, // Desativa timestamps automáticos do Sequelize
-  underscored: true, // Usa snake_case para nomes de coluna
+  timestamps: false,
+  underscored: true,
 });
 
 module.exports = VehiclesType;

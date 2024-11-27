@@ -8,7 +8,7 @@ const createVehicle = async (vehicleData) => {
     const vehicle = await Vehicle.create(vehicleData);
     return vehicle;
   } catch (error) {
-    throw new Error('Error creating vehicle: ' + error.message);
+    throw new Error('Erro ao criar o veículo: ' + error.message);
   }
 };
 
@@ -17,7 +17,7 @@ const getAllVehicles = async () => {
     const vehicles = await Vehicle.findAll();
     return vehicles;
   } catch (error) {
-    throw new Error('Error fetching vehicles: ' + error.message);
+    throw new Error('Erro ao obter o veículo: ' + error.message);
   }
 };
 
@@ -28,19 +28,19 @@ const getVehicleByPlate = async (plate) => {
       include: [
         {
           model: User,
-          as: 'user', // Certifique-se de que o alias corresponde ao definido na associação
-          attributes: ['full_name'] // Inclua apenas o nome do usuário
+          as: 'user',
+          attributes: ['full_name']
         }
       ]
     });
 
     if (!vehicle) {
-      throw new Error('Vehicle not found');
+      throw new Error('Veículo não encontrado');
     }
 
     return vehicle;
   } catch (error) {
-    throw new Error('Error fetching vehicle: ' + error.message);
+    throw new Error('Erro ao obter o veículo: ' + error.message);
   }
 };
 
@@ -48,27 +48,27 @@ const getVehiclesByUserId = async (userId) => {
   try {
     const user = await User.findByPk(userId);
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('Usuário não encontrado');
     }
 
     const vehicles = await Vehicle.findAll({ 
       where: { users_id: userId },
       include: [
         {
-          model: Brand, // Inclua o modelo Brand
-          as: 'brand', // O alias deve corresponder ao definido no modelo
-          attributes: ['name'] // Inclua apenas o nome da marca
+          model: Brand,
+          as: 'brand',
+          attributes: ['name']
         },
         {
-          model: VehiclesType, // Inclua o modelo Brand
-          as: 'type', // O alias deve corresponder ao definido no modelo
-          attributes: ['type_name'] // Inclua apenas o nome da marca
+          model: VehiclesType,
+          as: 'type',
+          attributes: ['type_name']
         }
       ]
      });
     return vehicles;
   } catch (error) {
-    throw new Error('Error fetching vehicles: ' + error.message);
+    throw new Error('Erro ao obter o veículo: ' + error.message);
   }
 };
 
@@ -76,12 +76,12 @@ const updateVehicle = async (id, vehicleData) => {
   try {
     const vehicle = await Vehicle.findByPk(id);
     if (!vehicle) {
-      throw new Error('Vehicle not found');
+      throw new Error('Veículo não encontrado');
     }
     await vehicle.update(vehicleData);
     return vehicle;
   } catch (error) {
-    throw new Error('Error updating vehicle: ' + error.message);
+    throw new Error('Erro ao atualizar o veículo: ' + error.message);
   }
 };
 
@@ -89,12 +89,12 @@ const deleteVehicle = async (id) => {
   try {
     const vehicle = await Vehicle.findByPk(id);
     if (!vehicle) {
-      throw new Error('Vehicle not found');
+      throw new Error('Veículo não encontrado');
     }
     await vehicle.destroy();
     return vehicle;
   } catch (error) {
-    throw new Error('Error deleting vehicle: ' + error.message);
+    throw new Error('Erro ao excluir o veículo: ' + error.message);
   }
 };
 

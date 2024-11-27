@@ -18,9 +18,8 @@ const carParkCapacityRoutes = require('./src/modules/carParkCapacities/carParkCa
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://www.systemparkcar.com.br/',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   credentials: true,
 };
 
@@ -37,7 +36,7 @@ app.get('/', (req, res) => {
   res.send('Servidor rodando! Bem-vindo à API.');
 });
 
-app.use('/api', authRoutes); // alterar para auth
+app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', vehicleRoutes);
 app.use('/api', vehicleTypeRoutes);

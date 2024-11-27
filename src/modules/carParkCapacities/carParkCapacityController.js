@@ -32,7 +32,7 @@ exports.getCapacityById = async (req, res) => {
 
 exports.getCapacitiesByVehicleType = async (req, res) => {
   try {
-    const carParksId = req.params.car_parks_id; // Obtém o ID do estacionamento dos parâmetros
+    const carParksId = req.params.car_parks_id;
     const capacities = await carParkCapacityService.getCapacitiesByVehicleType(carParksId);
 
     if (capacities.length === 0) {

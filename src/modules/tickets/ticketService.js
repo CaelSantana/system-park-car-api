@@ -13,17 +13,17 @@ exports.getAllTickets = async () => {
         {
           model: User,
           as: 'client',
-          attributes: ['full_name'] // Apenas o nome do cliente
+          attributes: ['full_name']
         },
         {
           model: User,
           as: 'employee',
-          attributes: ['full_name'] // Apenas o nome do funcionário
+          attributes: ['full_name']
         },
         {
           model: VehiclesType,
           as: 'vehicleType',
-          attributes: ['type_name'] // Inclua o nome ou qualquer outro campo necessário
+          attributes: ['type_name']
         },
         {
           model: Brand,
@@ -34,45 +34,35 @@ exports.getAllTickets = async () => {
     });
     return tickets;
   } catch (error) {
-    console.error('Error fetching tickets with user names:', error);
+    console.error('Erro ao obter tickets com nomes de usuário:', error);
     throw error;
   }
 };
 
 exports.createTicket = async (ticketData) => {
   try {
-    // Verifica se o estacionamento existe
     const carPark = await CarPark.findByPk(ticketData.car_parks_id);
     if (!carPark) {
-      throw new Error('Car park not found');
+      throw new Error('Estacionamento não encontrado');
     }
-
-    // Verifica se a marca existe
     const brand = await Brand.findByPk(ticketData.brands_id);
     if (!brand) {
-      throw new Error('Brand not found');
+      throw new Error('Marca não encontrada');
     }
-
-    // Verifica se o veículo existe
     const vehicle = await Vehicle.findOne({ where: { plate: ticketData.vehicles_plate } });
     if (!vehicle) {
-      throw new Error('Vehicle not found');
+      throw new Error('Veículo não encontrado');
     }
-
-    // Verifica se a tarifa existe
     const tariff = await Tariff.findByPk(ticketData.tariffs_id);
     if (!tariff) {
-      throw new Error('Tariff not found');
+      throw new Error('Tarifa não encontrada');
     }
-
     if (ticketData.start_time) {
       const [datePart, timePart] = ticketData.start_time.split(' ');
       const [day, month, year] = datePart.split('/');
       const formattedDate = `${year}-${month}-${day}`;
       ticketData.start_time = `${formattedDate} ${timePart}`;
     }
-
-    // Cria o ticket associado ao usuário
     const ticket = await Ticket.create({
       car_parks_id: ticketData.car_parks_id,
       garage_number: ticketData.garage_number,
@@ -87,7 +77,6 @@ exports.createTicket = async (ticketData) => {
       client_id: ticketData.client_id,
       employee_id: ticketData.employee_id,
     });
-
     return ticket;
   } catch (error) {
     throw new Error('Erro ao criar o ticket: ' + error.message);
@@ -98,7 +87,7 @@ exports.getTicketById = async (id) => {
   try {
     const ticket = await Ticket.findByPk(id);
     if (!ticket) {
-      throw new Error('Ticket not found');
+      throw new Error('Ticket não encontrado');
     }
     return ticket;
   } catch (error) {
@@ -110,22 +99,16 @@ exports.updateTicket = async (id, ticketData) => {
   try {
     const ticket = await Ticket.findByPk(id);
     if (!ticket) {
-      throw new Error('Ticket not found');
+      throw new Error('Ticket não encontrado');
     }
-    
     await ticket.update(ticketData);
-
-    // Calcular a duração se o finish_time estiver presente
     if (ticketData.finish_time) {
       const startTime = new Date(ticket.start_time);
       const finishTime = new Date(ticketData.finish_time);
-
-      const durationMinutes = Math.floor((finishTime - startTime) / 60000); // Converter milissegundos para minutos
-
+      const durationMinutes = Math.floor((finishTime - startTime) / 60000);
       ticket.duration = durationMinutes;
       await ticket.save();
     }
-
     return ticket;
   } catch (error) {
     throw error;
@@ -136,10 +119,10 @@ exports.deleteTicket = async (id) => {
   try {
     const ticket = await Ticket.findByPk(id);
     if (!ticket) {
-      throw new Error('Ticket not found');
+      throw new Error('Ticket não encontrado');
     }
     await ticket.destroy();
-    return { message: 'Ticket deleted successfully' };
+    return { message: 'Ticket excluído com sucesso' };
   } catch (error) {
     throw error;
   }

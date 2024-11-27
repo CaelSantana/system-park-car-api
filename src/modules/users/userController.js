@@ -1,50 +1,4 @@
 const userService = require('./userService');
-const bcrypt = require('bcrypt');
-
-// exports.createUser = async (req, res) => {
-//   try {
-//     // Recebe os dados do usuário do corpo da requisição (req.body)
-//     const { roles_id, full_name, email, cpf, password, birth, phone } = req.body;
-
-//     // Verifica se já existe um usuário com o mesmo email
-//     // const existingUserByEmail = await userService.getUserByEmail(email);
-//     // if (existingUserByEmail) {
-//     //   return res.status(400).json({ error: 'Email já está em uso' });
-//     // } 
-
-//     // Verifica se já existe um usuário com o mesmo nome
-//     // const existingUserByName = await userService.getUserByName(full_name);
-//     // if (existingUserByName) {
-//     //   return res.status(400).json({ error: 'Nome de usuário já está em uso' });
-//     // }
-
-//     // Verifica se já existe um usuário com o mesmo CPF
-//     // const existingUserByCPF = await userService.getUserByCPF(cpf);
-//     // if (existingUserByCPF) {
-//     //   return res.status(400).json({ error: 'CPF já está cadastrado' });
-//     // }
-
-//     // Gera um hash bcrypt da senha
-//     const hashedPassword = await bcrypt.hash(password, 10); // O segundo argumento é o custo do hash
-
-//     // Cria o usuário no serviço de usuário, passando os dados necessários
-//     const newUser = await userService.createUser({
-//       roles_id,
-//       full_name,
-//       email,
-//       password: hashedPassword,
-//       cpf,
-//       birth,
-//       phone
-//     });
-
-//     // Retorna o usuário criado
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     // Se ocorrer algum erro, retorna um erro 500 com a mensagem de erro
-//     res.status(500).json({ error: 'Erro ao criar usuário: ' + error.message });
-//   }
-// };
 
 exports.getAllUsers = async (_req, res) => {
   try {
@@ -109,6 +63,19 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+exports.updateUserPassword = async (req, res) => {
+  try {
+    const user = await userService.updateUser(req.params.id, req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    if (error.message === 'Usuário não encontrado') {
+      res.status(404).json({ error: 'Usuário não encontrado' });
+    } else{
+      res.status(500).json({ error: 'Erro ao atualizar a senha: ' + error.message });
+    }
+  }
+};
+
 exports.deleteUser = async (req, res) => {
   try {
     const result = await userService.deleteUser(req.params.id);
@@ -125,14 +92,13 @@ exports.deleteUser = async (req, res) => {
 exports.createAddressForUser = async (req, res) => {
   const { id } = req.params;
   const addressData = req.body;
-
   try {
     const address = await userService.createAddressForUser(id, addressData);
     res.status(201).json(address);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Address for user already exists')) {
+    } else if (error.message.includes('Endereço do usuário já existe')) {
       res.status(409).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -145,7 +111,7 @@ exports.getAddressByUserId = async (req, res) => {
     const { id } = req.params;
     const address = await userService.getAddressByUserId(id);
     if (!address) {
-      return res.status(404).json({ message: 'Address not found for user' });
+      return res.status(404).json({ message: 'Endereço do usuário não encontrado' });
     }
     res.status(200).json(address);
   } catch (error) {
@@ -156,14 +122,13 @@ exports.getAddressByUserId = async (req, res) => {
 exports.updateAddressForUser = async (req, res) => {
   const { id } = req.params;
   const addressData = req.body;
-
   try {
     const address = await userService.updateAddressForUser(id, addressData);
     res.status(200).json(address);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Address for user not found')) {
+    } else if (error.message.includes('Endereço do usuário não encontrado')) {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -173,14 +138,13 @@ exports.updateAddressForUser = async (req, res) => {
 
 exports.deleteAddressForUser = async (req, res) => {
   const { id } = req.params;
-
   try {
     const result = await userService.deleteAddressForUser(id);
     res.status(200).json(result);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Address for user not found')) {
+    } else if (error.message.includes('Endereço do usuário não encontrado')) {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -201,14 +165,13 @@ exports.getVehicleByUserId = async (req, res) => {
 exports.createVehicleForUser = async (req, res) => {
   const { id } = req.params;
   const vehicleData = req.body;
-
   try {
     const vehicle = await userService.createVehicleForUser(id, vehicleData);
     res.status(201).json(vehicle);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Vehicle for user already exists') || error.message.includes('Vehicle with this plate already exists')) {
+    } else if (error.message.includes('Veículo para o usuário já existe') || error.message.includes('Veículo com placa já cadastrada')) {
       res.status(409).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -219,14 +182,13 @@ exports.createVehicleForUser = async (req, res) => {
 exports.updateVehicleForUser = async (req, res) => {
   const { id } = req.params;
   const vehicleData = req.body;
-
   try {
     const vehicle = await userService.updateVehicleForUser(id, vehicleData);
     res.status(200).json(vehicle);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Vehicle for user not found')) {
+    } else if (error.message.includes('Veículo do usuário não encontrado')) {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -236,14 +198,13 @@ exports.updateVehicleForUser = async (req, res) => {
 
 exports.deleteVehicleForUser = async (req, res) => {
   const { id } = req.params;
-
   try {
     const result = await userService.deleteVehicleForUser(id);
     res.status(200).json(result);
   } catch (error) {
-    if (error.message.includes('User not found')) {
+    if (error.message.includes('Usuário não encontrado')) {
       res.status(404).json({ message: error.message });
-    } else if (error.message.includes('Vehicle for user not found')) {
+    } else if (error.message.includes('Veículo do usuário não encontrado')) {
       res.status(404).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });

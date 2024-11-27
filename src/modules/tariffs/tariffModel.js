@@ -12,22 +12,10 @@ const Tariff = sequelize.define('Tariff', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'vehicles_type', // Nome da tabela referenciada
-      key: 'id', // Chave referenciada
+      model: 'vehicles_type',
+      key: 'id',
     },
   },
-  // duration: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
-  // start_time: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
-  // end_time: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
@@ -48,10 +36,10 @@ const Tariff = sequelize.define('Tariff', {
     onUpdate: DataTypes.NOW,
   },
 }, {
-  timestamps: true, // Habilita timestamps automáticos
-  createdAt: 'created_at', // Mapeia createdAt para created_at
-  updatedAt: 'updated_at', // Mapeia updatedAt para updated_at
-  tableName: 'tariffs', // Nome da tabela no banco de dados
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  tableName: 'tariffs',
 });
 
 module.exports = Tariff;

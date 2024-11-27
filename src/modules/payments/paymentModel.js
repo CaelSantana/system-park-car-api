@@ -22,8 +22,8 @@ const Payment = sequelize.define('Payment', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'users', // Nome da tabela referenciada
-      key: 'id' // Chave referenciada
+      model: 'users',
+      key: 'id'
     }
   },
   date: {
@@ -38,10 +38,6 @@ const Payment = sequelize.define('Payment', {
     type: DataTypes.ENUM('cash', 'debit_card', 'credit_card', 'pix', 'others'),
     allowNull: false
   },
-  // method_name: {
-  //   type: DataTypes.ENUM('Dinheiro', 'Cartão de débito', 'Cartão de crédito', 'PIX', 'Outros'),
-  //   allowNull: false
-  // },
   created_at: {
     type: DataTypes.DATE(6),
     allowNull: false,

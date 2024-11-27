@@ -1,0 +1,10 @@
+CREATE TABLE tariffs (
+	id INT NOT NULL AUTO_INCREMENT,
+	vehicles_type_id INT NOT NULL,
+	price DECIMAL(10, 2) NOT NULL,
+	description VARCHAR(100),
+	created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+	updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+	PRIMARY KEY (id),
+	CONSTRAINT fk_tariffs_vehicles_type_id FOREIGN KEY (vehicles_type_id) REFERENCES vehicles_type (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

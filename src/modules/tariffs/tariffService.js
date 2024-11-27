@@ -28,7 +28,7 @@ const updateTariff = async (id, tariffData) => {
   try {
     const tariff = await Tariff.findByPk(id);
     if (!tariff) {
-      throw new Error('Tariff not found');
+      throw new Error('Tarifa não encontrada');
     }
     return await tariff.update(tariffData);
   } catch (error) {
@@ -40,12 +40,12 @@ const deleteTariff = async (id) => {
   try {
     const tariff = await Tariff.findByPk(id);
     if (!tariff) {
-      throw new Error('Tariff not found');
+      throw new Error('Tarifa não encontrada');
     }
     await tariff.destroy();
-    return { message: 'Tariff deleted successfully' };
+    return { message: 'Tarifa excluída com sucesso' };
   } catch (error) {
-    throw new Error('Erro ao deletar a tarifa: ' + error.message);
+    throw new Error('Erro ao exluir a tarifa: ' + error.message);
   }
 };
 
